@@ -210,8 +210,7 @@ data class MapDrawingManager(
         }
     }
         
-    fun endDrawMap():Boolean{
-        // Send index -1 if you want to draw a new fresh polygon
+    public fun endDrawMap(){
                         isLastPolygonDone = drawPolygon(shapeID.toString(), -1
                             , latLngListCurrent)
                         if (isLastPolygonDone) {
