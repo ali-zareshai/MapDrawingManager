@@ -663,7 +663,7 @@ data class MapDrawingManager(
      * any old polygon in polygonList
      * @return true if job done otherwise false
      */
-    private fun drawPolygon(polygonID: String, indexForEdit: Int, latLngList: List<LatLng>): Boolean {
+    public fun drawPolygon(polygonID: String, indexForEdit: Int, latLngList: List<LatLng>): Boolean {
         if (latLngList.size >= 3) {
             val polygonOptions = PolygonOptions()
             polygonOptions.addAll(latLngList)
