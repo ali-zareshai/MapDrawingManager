@@ -209,6 +209,16 @@ data class MapDrawingManager(
             }
         }
     }
+        
+    fun endDrawMap():Boolean{
+        // Send index -1 if you want to draw a new fresh polygon
+                        isLastPolygonDone = drawPolygon(shapeID.toString(), -1
+                            , latLngListCurrent)
+                        if (isLastPolygonDone) {
+                            currentPolyline?.remove()
+                            resetPolygon()
+                        }
+    }
 
     override fun onMarkerClick(marker: Marker): Boolean {
 
