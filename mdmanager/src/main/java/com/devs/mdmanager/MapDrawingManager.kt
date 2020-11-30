@@ -18,6 +18,7 @@ data class MapDrawingManager(
     var markerSize: Int = DEFAULT_MARKER_SIZE,
     var markerColor: Int = DEFAULT_MARKER_COLOR,
     var badgeColor: Int = DEFAULT_BADGE_COLOR,
+    var customRadius:Double? =64.0
     var badgeTextColor: Int = DEFAULT_BADGE_TEXT_COLOR,
     var editable: Boolean = DEFAULT_EDITABLE,
     var strokWidth: Float = DEFAULT_STROKE_WIDTH,
@@ -59,7 +60,7 @@ data class MapDrawingManager(
         private val DEFAULT_FILL_COLOR = Color.argb(90, 120, 161, 46)
         private val DEFAULT_SHAPE_TYPE = ShapeType.POLYGON
         private const val DEFAULT_EDITABLE = true
-        private const val DEFAULT_CIRCLE_RADIUS = 64.0
+        private val DEFAULT_CIRCLE_RADIUS = customRadius
         private val POLYLINE_STROKE_COLOR = Color.rgb(218, 179, 32)
         private val CIRCLE_STROKE_COLOR = Color.rgb(42, 177, 155)
         private val CIRCLE_FILL_COLOR = Color.argb(90, 42, 177, 155)
@@ -774,7 +775,7 @@ data class MapDrawingManager(
 //        drawListener?.onShapeCompleted(shapeType)
     }
 
-    private fun drawCircle(latLngCenter : LatLng){
+    public fun drawCircle(latLngCenter : LatLng){
         // Center point
         addMarkerOnMap(latLngCenter)
         latLngListCurrent.add(latLngCenter)
