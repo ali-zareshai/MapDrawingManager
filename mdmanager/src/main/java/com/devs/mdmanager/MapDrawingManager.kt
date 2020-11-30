@@ -18,7 +18,6 @@ data class MapDrawingManager(
     var markerSize: Int = DEFAULT_MARKER_SIZE,
     var markerColor: Int = DEFAULT_MARKER_COLOR,
     var badgeColor: Int = DEFAULT_BADGE_COLOR,
-    var customRadius:Double? =64.0
     var badgeTextColor: Int = DEFAULT_BADGE_TEXT_COLOR,
     var editable: Boolean = DEFAULT_EDITABLE,
     var strokWidth: Float = DEFAULT_STROKE_WIDTH,
@@ -60,7 +59,7 @@ data class MapDrawingManager(
         private val DEFAULT_FILL_COLOR = Color.argb(90, 120, 161, 46)
         private val DEFAULT_SHAPE_TYPE = ShapeType.POLYGON
         private const val DEFAULT_EDITABLE = true
-        private val DEFAULT_CIRCLE_RADIUS = customRadius
+        private const val DEFAULT_CIRCLE_RADIUS = 64.0
         private val POLYLINE_STROKE_COLOR = Color.rgb(218, 179, 32)
         private val CIRCLE_STROKE_COLOR = Color.rgb(42, 177, 155)
         private val CIRCLE_FILL_COLOR = Color.argb(90, 42, 177, 155)
@@ -202,7 +201,7 @@ data class MapDrawingManager(
             }
             ShapeType.CIRCLE -> {
                 resetCircle()
-                drawCircle(latLng)
+                drawCircle(latLng,DEFAULT_CIRCLE_RADIUS)
             }
             ShapeType.POINT -> {
                 resetMarker()
@@ -775,13 +774,13 @@ data class MapDrawingManager(
 //        drawListener?.onShapeCompleted(shapeType)
     }
 
-    public fun drawCircle(latLngCenter : LatLng){
+    public fun drawCircle(latLngCenter : LatLng,radius:Double){
         // Center point
         addMarkerOnMap(latLngCenter)
         latLngListCurrent.add(latLngCenter)
 
         // Perimeter points
-        val perimeterPoint = Utils.getDestinationPoint(latLngCenter,DEFAULT_CIRCLE_RADIUS)
+        val perimeterPoint = Utils.getDestinationPoint(latLngCenter,radius)
         addMarkerOnMap(perimeterPoint)
         latLngListCurrent.add(perimeterPoint)
 
@@ -790,7 +789,7 @@ data class MapDrawingManager(
         circleOptions.strokeColor(CIRCLE_STROKE_COLOR)
         circleOptions.fillColor(CIRCLE_FILL_COLOR)
         circleOptions.strokeWidth(Constants.CIRCLE_STROKE_WIDTH.toFloat())
-        circleOptions.radius(DEFAULT_CIRCLE_RADIUS)
+        circleOptions.radius(radius)
 
         // Get a point between two points for number badge
         val builder = LatLngBounds.Builder()
@@ -885,7 +884,7 @@ data class MapDrawingManager(
         drawListener?.onShapeCompleted(shapeType, shapeID.toString())
     }
 
-    private fun resetPolygon() {
+    public fun resetPolygon() {
         latLngListCurrent.clear()
         shapeID = System.currentTimeMillis()
         currentPolygon = null
@@ -899,7 +898,7 @@ data class MapDrawingManager(
         currentMarkers.clear()
     }
 
-    private fun resetCircle(){
+    public fun resetCircle(){
         latLngListCurrent.clear()
         shapeID = System.currentTimeMillis()
         currentCircle = null
